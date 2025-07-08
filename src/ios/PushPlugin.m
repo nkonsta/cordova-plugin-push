@@ -267,8 +267,10 @@
 
     void (^completionHandler)(UIBackgroundFetchResult) = notification.userInfo[@"completionHandler"];
 
+    static BOOL const kForceTreatAllPushesAsBackground = YES;
+
     // app is in the background or inactive, so only call notification callback if this is a silent push
-    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive || kForceTreatAllPushesAsBackground) {
         NSLog(@"[PushPlugin] app in-active");
         // do some convoluted logic to find out if this should be a silent push.
         long silent = 0;
